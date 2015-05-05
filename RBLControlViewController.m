@@ -214,10 +214,10 @@ bool isNotified = false;
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 [ble write:output2];
                 
-                alert = [[UIAlertView alloc] initWithTitle:@"Adjusting..."
+                alert = [[UIAlertView alloc] initWithTitle:@"Start Adjustment"
                                                    message:nil
                                                   delegate:nil
-                                         cancelButtonTitle:@"OK"
+                                         cancelButtonTitle:nil//@"OK"
                                          otherButtonTitles:nil];
                 [alert show];
             });
@@ -487,7 +487,9 @@ NSTimer *syncTimer;
         z_maxY = -100000.0f;
         
         [alert setTitle:@"Adjustment Complete"];
-        //[alert set];
+        //[alert setMessage:@"Please press OK to continue."];
+        //sleep(1);
+        [alert dismissWithClickedButtonIndex:0 animated:YES];
     }
     else
     {
