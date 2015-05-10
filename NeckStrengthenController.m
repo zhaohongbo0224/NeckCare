@@ -119,6 +119,7 @@ float timeThreshold2 = 5.0;
             position++;
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 view.image = [UIImage imageNamed:[picArray objectAtIndex:position]];
+                timeView.text = [NSString stringWithFormat:@"%.0f %@", timeThreshold2, @" times to next."];
                 description.text = [NSString stringWithFormat:@"%@ %d %@ %lu", @"Posture:", position + 1, @"/", (unsigned long)[picArray count]];
                 techPoint.text = textArray[position];
                 [previous setTitleColor:self.view.tintColor forState:UIControlStateNormal];

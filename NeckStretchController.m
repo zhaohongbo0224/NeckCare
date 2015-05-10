@@ -35,7 +35,7 @@ float timeThreshold = 5.0;
     
     dispathQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
-    picArray = [[NSArray alloc] initWithObjects:@"stretch1", @"stretch2", @"stretch3", @"stretch4", nil];
+    picArray = [[NSArray alloc] initWithObjects:@"stretch5", @"stretch2", @"stretch3", @"stretch4", nil];
     textArray = [[NSArray alloc] initWithObjects:@"Look straight forward and do not let the chin drop down.\n\nMove your ear towards the left shoulder\n\nDon’t  let your shoulder lift up.\n\nHold between 10 and 30 seconds",
                  @"Look straight forward and do not let the chin drop down.\n\nMove your ear towards the right shoulder\n\nDon’t  let your shoulder lift up.\n\nHold between 10 and 30 seconds",
                  @"Start facing straight forward and make your shoulder feel relaxed\n\nTurn the head to left and bring the chin down, stretching the back of the neck\n\nHold between 3 to 5 breathe",
@@ -143,6 +143,7 @@ float timeThreshold = 5.0;
             position++;
             dispatch_async(dispatch_get_main_queue(), ^(void){
                 view.image = [UIImage imageNamed:[picArray objectAtIndex:position]];
+                timeView.text = [NSString stringWithFormat:@"%.0f %@", timeThreshold, @" seconds to next."];
                 description.text = [NSString stringWithFormat:@"%@ %d %@ %lu", @"Posture:", position + 1, @"/", (unsigned long)[picArray count]];
                 techPoint.text = textArray[position];
                 [previous setTitleColor:self.view.tintColor forState:UIControlStateNormal];

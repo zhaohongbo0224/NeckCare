@@ -18,6 +18,7 @@
 #import "NeckStretchController.h"
 #import "ChartViewController.h"
 #import "Util.h"
+#import <AVFoundation/AVFoundation.h>
 
 uint8_t total_pin_count  = 0;
 uint8_t pin_mode[128]    = {0};
@@ -54,11 +55,16 @@ ChartViewController *chartViewController;
 //NSNotificationCenter *center;
 
 int alertCount = 0;
-int alertCountThreshold = 5;
+int alertCountThreshold = 2;
 bool isNotified = false;
+
+AVAudioPlayer *audioPlayer;
 
 @synthesize ble;
 @synthesize protocol;
+
+//@synthesize soundFileURLRef;
+//@synthesize soundFileObject;
 
 /*
 - (void)awakeFromNib
@@ -79,7 +85,7 @@ bool isNotified = false;
 	// Do any additional setup after loading the view, typically from a nib.
     
     alertCount = 0;
-    alertCountThreshold = 5;
+    alertCountThreshold = 2;
     x_minY = 100000.0f;
     x_maxY = -100000.0f;
     y_minY = 100000.0f;
@@ -196,6 +202,11 @@ bool isNotified = false;
     protocol.ble = ble;
     
     NSLog(@"ControlView: viewDidLoad");
+    
+    NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"hello" ofType:@"aiff"];
+    NSError* error = nil;
+    NSURL *url = [[NSURL alloc] initWithString:soundPath];
+    audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
 }
 
 - (void)handleAdjustDataRec:(UITapGestureRecognizer *)sender
@@ -414,6 +425,8 @@ NSTimer *syncTimer;
             localNotification.soundName = UILocalNotificationDefaultSoundName;
             localNotification.applicationIconBadgeNumber = 1;
             [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+            
+            [audioPlayer play];
         });
     });
 }
@@ -467,12 +480,12 @@ NSTimer *syncTimer;
     if([s compare:@"a"] == 0) {
         alertCount++;
         
+        [self notify];
+        
         if(alertCount == alertCountThreshold) {
             [self notifyExercise];
             //alertCount = 0;
         }
-        
-        [self notify];
     }
     else if([s compare:@"f"] == 0) {
         [dataArrayX removeAllObjects];

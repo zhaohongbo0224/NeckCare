@@ -14,15 +14,21 @@
 #import <UIKit/UIKit.h>
 #import "RBLProtocol.h"
 #import "BLE.h"
+#include <AudioToolbox/AudioToolbox.h>
 
 @interface RBLControlViewController : UIViewController <ProtocolDelegate, UITextFieldDelegate, UIAlertViewDelegate>
 {
     //IBOutlet UIView *tv;
     dispatch_queue_t dispathQueue;
+    //CFURLRef		soundFileURLRef;
+    //SystemSoundID	soundFileObject;
 }
 
 @property (strong, nonatomic) BLE *ble;
 @property (strong, nonatomic) RBLProtocol *protocol;
+
+//@property (readwrite)	CFURLRef		soundFileURLRef;
+//@property (readonly)	SystemSoundID	soundFileObject;
 
 -(void) processData:(uint8_t *) data length:(uint8_t) length;
 
